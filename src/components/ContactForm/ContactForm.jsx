@@ -1,12 +1,10 @@
 import css from './ContactForm.module.css';
-//npm install formik yup
+//npm install formik yup 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useId } from 'react';
-// npm install nanoid
-import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/contactsOps';
 
 const ContactFormSchema = Yup.object().shape({
   name: Yup.string()
@@ -33,14 +31,13 @@ export default function ContactForm() {
       }}
       onSubmit={(values, { resetForm }) => {
         const newContact = {
-          id: nanoid(5),
           name: values.name,
           number: values.number,
         };
         dispatch(addContact(newContact));
         resetForm();
       }}
-      validationSchema={ContactFormSchema} 
+      validationSchema={ContactFormSchema}
     >
       <Form className={css.form}>
         <label htmlFor={nameFieldId}>Name</label>
