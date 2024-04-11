@@ -3,7 +3,7 @@ import {
   addContact,
   deleteContact,
   fetchContacts,
-  updateContact,
+  // updateContact,
 } from './contactsOps';
 import { selectNameFilter } from './filtersSlice';
 
@@ -29,6 +29,9 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+
+
       .addCase(addContact.pending, state => {
         state.error = false;
         state.loading = true;
@@ -41,6 +44,9 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = true;
       })
+
+
+
       .addCase(deleteContact.pending, state => {
         state.error = false;
         state.loading = true;
@@ -55,24 +61,27 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = true;
       })
-      .addCase(updateContact.pending, state => {
-        state.error = false;
-        state.loading = true;
-      })
-      .addCase(updateContact.fulfilled, (state, action) => {
-        const taskIndex = state.items.findIndex(
-          item => item.id === action.payload.id
-        );
-        state.items[taskIndex] = action.payload;
-      })
-      .addCase(updateContact.rejected, state => {
-        state.loading = false;
-        state.error = true;
-      }),
+
+
+
+      // .addCase(updateContact.pending, state => {
+      //   state.error = false;
+      //   state.loading = true;
+      // })
+      // .addCase(updateContact.fulfilled, (state, action) => {
+      //   const taskIndex = state.items.findIndex(
+      //     item => item.id === action.payload.id
+      //   );
+      //   state.items[taskIndex] = action.payload;
+      // })
+      // .addCase(updateContact.rejected, state => {
+      //   state.loading = false;
+      //   state.error = true;
+      // }),
 });
 
 export const selectContacts = state => state.contacts.items;
-export const selectVisibleContacts = createSelector(
+export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
     return contacts.filter(contact =>
